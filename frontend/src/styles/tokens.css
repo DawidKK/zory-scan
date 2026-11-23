@@ -1,0 +1,64 @@
+/* Tokeny z DESIGN.md */
+:root {
+  --brand-red: #d83c32;
+  --brand-red-hover: #c4352c;
+  --brand-orange: #edad42;
+  --brand-teal: #85c8cc;
+
+  --brand-red-text: #b8322a;
+  --brand-orange-text: #9a6a14;
+  --brand-teal-text: #2e7f84;
+
+  --brand-red-soft: rgb(216 60 50 / 0.1);
+  --brand-orange-soft: rgb(237 173 66 / 0.14);
+  --brand-teal-soft: rgb(133 200 204 / 0.18);
+
+  --bg: #fbfbfb;
+  --bg-sidebar: #f4f4f5;
+  --bg-elevated: #ffffff;
+  --bg-hover: #efeff0;
+  --bg-active: #e8e8ea;
+  --border: #e6e6e8;
+  --border-strong: #d4d4d8;
+  --text: #1b1b1f;
+  --text-secondary: #5c5c66;
+  --text-tertiary: #8b8b94;
+
+  --shadow-popover: 0 4px 16px rgb(0 0 0 / 0.08), 0 0 0 1px var(--border);
+  --shadow-modal: 0 16px 48px rgb(0 0 0 / 0.16), 0 0 0 1px var(--border);
+  --overlay: rgb(0 0 0 / 0.4);
+
+  --font: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --brand-red-text: #e5574d;
+  --brand-orange-text: var(--brand-orange);
+  --brand-teal-text: var(--brand-teal);
+
+  --brand-red-soft: rgb(216 60 50 / 0.16);
+  --brand-orange-soft: rgb(237 173 66 / 0.14);
+  --brand-teal-soft: rgb(133 200 204 / 0.14);
+
+  --bg: #0f0f10;
+  --bg-sidebar: #141416;
+  --bg-elevated: #1a1a1c;
+  --bg-hover: #222225;
+  --bg-active: #2a2a2e;
+  --border: #26262a;
+  --border-strong: #333338;
+  --text: #ededef;
+  --text-secondary: #a0a0ab;
+  --text-tertiary: #6b6b75;
+
+  --shadow-popover: 0 4px 16px rgb(0 0 0 / 0.4), 0 0 0 1px var(--border);
+  --shadow-modal: 0 16px 48px rgb(0 0 0 / 0.5), 0 0 0 1px var(--border);
+  --overlay: rgb(0 0 0 / 0.6);
+
+  color-scheme: dark;
+}

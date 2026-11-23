@@ -1,0 +1,14 @@
+# Pinguje backend na Renderze co 10 minut, żeby darmowa instancja nie zasypiała.
+# Ustaw w repo: Settings → Secrets and variables → Actions → Variables → API_URL
+# (np. https://zory-scan-api.onrender.com). Bez tej zmiennej workflow nic nie robi.
+name: keepalive
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    if: ${{ vars.API_URL != '' }}
+    steps:
+      - run: curl -fsS --max-time 60 "${{ vars.API_URL }}/health"
