@@ -9,9 +9,19 @@ PoC: skaner kodów QR (PWA) + dashboard administratora z mapą punktów.
 ## Jak to działa
 
 1. Admin (`/admin`) klika na mapie → tworzy punkt (nazwa, treść, współrzędne).
-2. Każdy punkt ma kod QR z linkiem `https://<frontend>/scan?p=<id>` (zakładka **QR Code**).
+2. Każdy punkt (słup) ma kod QR z linkiem `https://<frontend>/scan?p=<id>` (zakładka **QR Code**).
 3. Użytkownik loguje się do skanera (`/scan`), skanuje kod → widzi treść punktu, skan zapisuje się w bazie.
 4. Admin widzi listę ostatnich skanów i punkty na mapie (świeżo zeskanowane pulsują na turkusowo).
+
+### Sieć oświetleniowa
+
+Model: **szafa SOU → obwody (zwykle do ~6) → słupy → oprawy**.
+
+- Słup ma: obwód (z niego wynika szafa), słup poprzedzający („zasilany z”, pusty = prosto z szafy), numer w obwodzie, nr inwentarzowy, stan (istniejący / projektowany), długość i typ kabla.
+- Numeracja jak na tabliczkach: `84/I/8/2/1` = SOU-84, obwód I, słup 8/2/1. Kolejne słupy w linii: 1, 2, 3… Odgałęzienie od słupa 8: 8/1, 8/2… Formularz podpowiada numer, ale **nie przenumerowuje** istniejących słupów, żeby dane zgadzały się z tabliczkami.
+- Oprawa ma: indeks (a, b przy kilku oprawach na słupie), fazę L1/L2/L3 (podpowiadana rotacyjnie), moc i typ.
+- Na mapie: przełącznik „Słup / SOU” decyduje, co dodaje kliknięcie. Ikona ołówka przy obwodzie (panel szafy albo zakładka „Sieć”) włącza **rysowanie obwodu**: każde kliknięcie dodaje kolejny słup z numerem i fazą, a kliknięcie istniejącego słupa zaczyna odgałęzienie od niego.
+- Walidacja w API: poprzednik musi być w tym samym obwodzie, bez cykli, numer unikalny w obwodzie. Usunięcie słupa podpina jego następników pod poprzednika. Usunięcie szafy albo obwodu robi z jego słupów „nieprzypisane”.
 
 Logowanie: dwa wspólne konta z env (`SCANNER_*` i `ADMIN_*`). Konto admina działa też w skanerze.
 
@@ -46,6 +56,16 @@ npm run db:generate                    # tworzy plik SQL w backend/drizzle/ (com
 ```
 
 Migracje wykonują się automatycznie przy starcie backendu.
+
+### Dane przykładowe (sieć oświetleniowa w Żorach)
+
+```bash
+cd backend
+npm run db:seed              # tylko gdy w bazie nie ma jeszcze szaf
+npm run db:seed -- --reset   # czyści sieć i seeduje od nowa (nazwane punkty i punkty ze skanami zostają)
+```
+
+Seed tworzy 3 szafy (SOU-84 ul. Wodzisławska, SOU-12 Rynek, SOU-04 al. Zjednoczonej Europy), 13 obwodów, ok. 200 słupów i 240 opraw rozmieszczonych wzdłuż prawdziwych ulic (geometria z OpenStreetMap w `src/db/seed-streets.json`). Sama sieć jest **fikcyjna**, to dane pokazowe. Dotychczasowe nazwane punkty są podpinane do najbliższego słupa jako odgałęzienie.
 
 ## Deploy
 

@@ -1,5 +1,5 @@
 import { clearToken, getScannerToken, getToken, setToken } from './auth';
-import type { Point, PointInput, Role, ScanResult, ScanRow } from './types';
+import type { Cabinet, CabinetInput, Point, PointInput, Role, ScanResult, ScanRow } from './types';
 
 const BASE = (import.meta.env.VITE_API_URL || '/api').replace(/\/$/, '');
 
@@ -79,6 +79,16 @@ export const api = {
     request<Point>(`/points/${id}`, { method: 'PATCH', auth: 'admin', body: JSON.stringify(input) }),
 
   deletePoint: (id: string) => request<void>(`/points/${id}`, { method: 'DELETE', auth: 'admin' }),
+
+  cabinets: () => request<Cabinet[]>('/cabinets', { auth: 'admin' }),
+
+  createCabinet: (input: CabinetInput) =>
+    request<Cabinet>('/cabinets', { method: 'POST', auth: 'admin', body: JSON.stringify(input) }),
+
+  updateCabinet: (id: string, input: Partial<CabinetInput>) =>
+    request<Cabinet>(`/cabinets/${id}`, { method: 'PATCH', auth: 'admin', body: JSON.stringify(input) }),
+
+  deleteCabinet: (id: string) => request<void>(`/cabinets/${id}`, { method: 'DELETE', auth: 'admin' }),
 
   scans: (limit = 100) => request<ScanRow[]>(`/scans?limit=${limit}`, { auth: 'admin' }),
 };

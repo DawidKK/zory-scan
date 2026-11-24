@@ -13,6 +13,12 @@
   --brand-orange-soft: rgb(237 173 66 / 0.14);
   --brand-teal-soft: rgb(133 200 204 / 0.18);
 
+  /* Szafa oświetlenia ulicznego (SOU) — niebieski zarezerwowany wyłącznie dla szaf */
+  --sou-blue: #2f6fdb;
+  --sou-blue-strong: #1f4fa8;
+  --sou-blue-text: #2457b3;
+  --sou-blue-soft: rgb(47 111 219 / 0.12);
+
   --bg: #fbfbfb;
   --bg-sidebar: #f4f4f5;
   --bg-elevated: #ffffff;
@@ -44,6 +50,9 @@
   --brand-red-soft: rgb(216 60 50 / 0.16);
   --brand-orange-soft: rgb(237 173 66 / 0.14);
   --brand-teal-soft: rgb(133 200 204 / 0.14);
+
+  --sou-blue-text: #7aa5f2;
+  --sou-blue-soft: rgb(47 111 219 / 0.2);
 
   --bg: #0f0f10;
   --bg-sidebar: #141416;

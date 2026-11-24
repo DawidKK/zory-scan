@@ -41,7 +41,7 @@ export function AdminLayout() {
           </NavLink>
           <NavLink to="/admin/points" className={navClass}>
             <MapPin {...ICON} />
-            <span>Punkty</span>
+            <span>Słupy</span>
             {points.data && <span className="nav-count tabular">{points.data.length}</span>}
           </NavLink>
           <NavLink to="/admin/qr" className={navClass}>

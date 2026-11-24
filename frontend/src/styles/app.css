@@ -940,6 +940,626 @@
   color: var(--brand-orange);
 }
 
+/* =============== Sieć oświetleniowa =============== */
+
+/* Pinezka słupa: dodatki */
+.pin-eye {
+  fill: #fff;
+}
+/* Słup projektowany: biała pinezka z czerwonym obrysem (jak „proj.” na schematach) */
+.pin-planned .pin-body {
+  fill: #fff;
+  stroke: var(--brand-red);
+  stroke-width: 2;
+  stroke-dasharray: 4 2;
+}
+.pin-planned .pin-eye {
+  fill: var(--brand-red);
+}
+.pin-dim {
+  opacity: 0.4;
+}
+.pin-count {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border: 1.5px solid #fff;
+  border-radius: 8px;
+  background: var(--text);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 13px;
+  text-align: center;
+}
+
+/* Znacznik szafy SOU */
+.sou {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 2px solid #fff;
+  border-radius: 6px;
+  background: var(--sou-blue);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.35);
+  cursor: pointer;
+  transition: transform 120ms var(--ease);
+}
+.sou:hover {
+  transform: scale(1.08);
+}
+.sou-selected {
+  background: var(--sou-blue-strong);
+  transform: scale(1.25);
+}
+.sou-selected:hover {
+  transform: scale(1.25);
+}
+.sou-draft {
+  border-style: dashed;
+  opacity: 0.85;
+}
+.sou-dim {
+  opacity: 0.45;
+}
+.sou-swatch {
+  flex: none;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--sou-blue);
+}
+.seg-pin {
+  flex: none;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: var(--brand-red);
+}
+.circuit-swatch {
+  flex: none;
+  display: inline-block;
+  width: 10px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+/* Stałe etykiety na mapie (numer słupa, SOU) */
+.map-label {
+  padding: 0 5px !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 4px !important;
+  background: color-mix(in srgb, var(--bg-elevated) 92%, transparent) !important;
+  box-shadow: none !important;
+  color: var(--text) !important;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+}
+.map-label::before {
+  display: none;
+}
+.map-label-phase {
+  margin-left: 4px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+.map-label-sou {
+  border-color: var(--sou-blue) !important;
+  background: var(--sou-blue) !important;
+  color: #fff !important;
+}
+.map-wrap-crosshair .leaflet-container {
+  cursor: crosshair;
+}
+
+/* Pasek trybu rysowania / wskazywania */
+.draw-bar {
+  position: absolute;
+  top: 10px;
+  left: 56px;
+  right: 230px;
+  z-index: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 640px;
+  padding: 8px 8px 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-popover);
+}
+.draw-bar .circuit-swatch {
+  width: 4px;
+  height: 28px;
+}
+.draw-bar-text {
+  flex: 1;
+  min-width: 0;
+}
+.draw-bar-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+.draw-bar-meta {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.draw-bar-meta strong {
+  font-weight: 600;
+  color: var(--text);
+}
+.draw-bar-hint {
+  color: var(--text-tertiary);
+}
+
+/* Przełącznik segmentowy w topbarze */
+.segmented {
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-sidebar);
+}
+.segmented-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.segmented-item:hover {
+  color: var(--text);
+}
+.segmented-item-active {
+  background: var(--bg-elevated);
+  color: var(--text);
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+/* Filtry: select zakresu */
+.map-filter-select {
+  padding: 0;
+}
+.map-filter-select:hover {
+  background: none;
+}
+.map-filter-select .select {
+  width: 100%;
+}
+
+/* Zakładki panelu bocznego */
+.side-tabs {
+  flex: none;
+  display: flex;
+  height: 36px;
+  border-bottom: 1px solid var(--border);
+}
+.side-tab {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  cursor: pointer;
+}
+.side-tab:hover {
+  color: var(--text);
+}
+.side-tab-active {
+  border-bottom-color: var(--text);
+  color: var(--text);
+}
+.side-tab-count {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-tertiary);
+}
+.side-foot {
+  flex: none;
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  padding: 8px 16px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-tertiary);
+}
+.side-foot svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+/* Drzewo sieci */
+.tree {
+  padding: 4px 0;
+}
+.tree-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px 0 6px;
+  border: 0;
+  background: none;
+  font-size: 14px;
+  text-align: left;
+}
+button.tree-row {
+  cursor: pointer;
+}
+.tree-row:hover {
+  background: var(--bg-hover);
+}
+.tree-row-active,
+.tree-row-active:hover {
+  background: var(--bg-active);
+}
+.tree-row-drawing {
+  background: var(--brand-orange-soft);
+}
+.tree-cabinet {
+  margin-top: 4px;
+  font-weight: 600;
+}
+.tree-circuit {
+  padding-left: 22px;
+}
+.tree-toggle {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+}
+.tree-toggle:disabled {
+  cursor: default;
+}
+.tree-toggle svg {
+  transition: transform 120ms var(--ease);
+}
+.tree-chevron-open {
+  transform: rotate(90deg);
+}
+.tree-label {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.tree-label-static {
+  cursor: default;
+}
+.tree-circuit .tree-label {
+  font-weight: 500;
+}
+.tree-title {
+  flex: none;
+  white-space: nowrap;
+}
+.tree-title-muted {
+  color: var(--text-tertiary);
+}
+.tree-meta {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-tertiary);
+}
+.tree-meta-name {
+  flex: 1;
+}
+.tree-count {
+  flex: none;
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-tertiary);
+}
+.tree-pole {
+  min-height: 26px;
+}
+.tree-pole-dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--brand-red);
+}
+.tree-pole-planned {
+  background: none;
+  box-shadow: inset 0 0 0 1.5px var(--brand-red);
+}
+.btn-xs {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+}
+
+/* Panel: sekcje formularza */
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.panel-title-dot {
+  width: 4px;
+  height: 18px;
+  border-radius: 2px;
+}
+.panel-title-sou {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background: var(--sou-blue);
+}
+.panel-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.panel-section + .panel-section {
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.panel-section-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.panel-section-meta {
+  font-weight: 500;
+}
+.panel-hint-tight {
+  margin: 0;
+}
+.panel-hint-warn {
+  color: var(--brand-orange-text);
+}
+.field-row-narrow {
+  grid-template-columns: 2fr 3fr;
+}
+.input-group {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.input-group .select,
+.input-group .input {
+  flex: 1;
+  min-width: 0;
+}
+.input-prefix {
+  flex: none;
+  font-size: 14px;
+  color: var(--text-tertiary);
+}
+.input-sm,
+.select-sm {
+  height: 28px;
+  padding: 0 8px;
+  font-size: 14px;
+}
+.select-sm {
+  padding-right: 24px;
+  background-position: right 8px center;
+}
+.textarea-sm {
+  min-height: 72px;
+}
+.btn-start {
+  align-self: flex-start;
+}
+.btn-active {
+  background: var(--brand-teal-soft);
+  border-color: var(--brand-teal-text);
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.chip {
+  height: 24px;
+  padding: 0 8px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 12px;
+  background: none;
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.chip:hover {
+  border-style: solid;
+  background: var(--bg-hover);
+  color: var(--text);
+}
+.chip .tabular {
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Oprawy */
+.fixtures {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.fixture-row {
+  display: grid;
+  grid-template-columns: 52px 64px 72px 1fr 28px;
+  gap: 6px;
+  align-items: center;
+}
+.fixture-head {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+/* Obwody w panelu szafy */
+.circuits {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.circuit-row {
+  display: grid;
+  grid-template-columns: 10px 96px 1fr 28px 28px;
+  gap: 6px;
+  align-items: center;
+}
+.circuit-row .circuit-swatch {
+  height: 10px;
+}
+.circuit-number .input {
+  width: 100%;
+}
+.circuit-stats {
+  grid-column: 2 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin-top: -2px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+.phase-bar {
+  display: inline-flex;
+  gap: 8px;
+}
+.phase-cell {
+  color: var(--text-secondary);
+}
+
+/* Droga zasilania */
+.path {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 0;
+  margin: 2px 0;
+  font-size: 13px;
+}
+.path-node {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  font-size: 13px;
+  font-weight: 500;
+}
+.path-node + .path-node::before {
+  content: '›';
+  margin-right: 6px;
+  color: var(--text-tertiary);
+  font-weight: 400;
+}
+.path-sou {
+  color: var(--sou-blue-text);
+}
+.path-circuit {
+  color: var(--text-secondary);
+}
+.path-link {
+  cursor: pointer;
+}
+.path-link:hover:not(:disabled) {
+  text-decoration: underline;
+}
+.path-current {
+  font-weight: 700;
+}
+
+/* Skaner: dane słupa */
+.sheet-subtitle {
+  margin: -8px 0 0;
+  font-size: 15px;
+  color: #a0a0ab;
+}
+.sheet-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: 0;
+}
+.sheet-facts dt {
+  font-size: 12px;
+  color: #6b6b75;
+}
+.sheet-facts dd {
+  margin: 0;
+  white-space: nowrap;
+  font-size: 17px;
+  font-weight: 600;
+  color: #ededef;
+}
+.sheet-fixtures {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  color: #a0a0ab;
+}
+.sheet-fixtures li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  border-top: 1px solid #26262a;
+}
+.sheet-fixtures li span:last-child {
+  color: #ededef;
+}
+
 /* =============== Mobile =============== */
 @media (max-width: 760px) {
   .admin {
@@ -982,8 +1602,15 @@
     padding: 0;
   }
   .topbar-hint,
-  .row-hide-sm {
+  .row-hide-sm,
+  .draw-bar-hint {
     display: none;
+  }
+  .draw-bar {
+    left: 50px;
+    right: 10px;
+    top: auto;
+    bottom: 24px;
   }
   .search {
     width: 120px;

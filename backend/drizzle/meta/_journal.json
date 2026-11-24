@@ -15,6 +15,13 @@
       "when": 1795428091765,
       "tag": "0001_point_address",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1795521441638,
+      "tag": "0002_network",
+      "breakpoints": true
     }
   ]
 }

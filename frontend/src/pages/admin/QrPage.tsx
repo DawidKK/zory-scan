@@ -2,12 +2,16 @@ import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
 import { Copy, Shuffle } from 'lucide-react';
-import { usePoints } from '../../lib/queries';
+import { useNetwork } from '../../lib/queries';
+import { compareNumbers, pointTitle } from '../../lib/network';
 import { qrPayload } from '../../lib/qr';
 import { useToast } from '../../components/Toast';
 
 export function QrPage() {
-  const { data: points = [], isLoading } = usePoints();
+  const { idx, points: rawPoints, isLoading } = useNetwork();
+  const points = [...rawPoints].sort(
+    (a, b) => pointTitle(a, idx).localeCompare(pointTitle(b, idx), 'pl', { numeric: true }) || compareNumbers(a.number, b.number),
+  );
   const [params, setParams] = useSearchParams();
   const toast = useToast();
   const [selectedId, setSelectedId] = useState<string>(params.get('p') ?? '');
@@ -48,20 +52,21 @@ export function QrPage() {
 
       {!isLoading && points.length === 0 ? (
         <div className="empty">
-          <p className="empty-title">Brak punktów</p>
+          <p className="empty-title">Brak słupów</p>
           <p>
-            Najpierw dodaj punkt na <Link to="/admin">mapie</Link>.
+            Najpierw dodaj słup na <Link to="/admin">mapie</Link>.
           </p>
         </div>
       ) : (
         <div className="qr-page">
           <div className="qr-controls">
             <label className="field qr-select">
-              <span className="label">Punkt</span>
+              <span className="label">Słup</span>
               <select className="select" value={selectedId} onChange={(e) => select(e.target.value)}>
                 {points.map((p) => (
                   <option key={p.id} value={p.id}>
-                    {p.name}
+                    {pointTitle(p, idx)}
+                    {p.name && pointTitle(p, idx) !== p.name ? ` · ${p.name}` : ''}
                   </option>
                 ))}
               </select>
@@ -78,7 +83,8 @@ export function QrPage() {
                 <QRCodeSVG value={payload} size={280} level="M" marginSize={0} />
               </div>
               <div className="qr-info">
-                <h2 className="qr-name">{point.name}</h2>
+                <h2 className="qr-name tabular">{pointTitle(point, idx)}</h2>
+                {point.name && pointTitle(point, idx) !== point.name && <p className="qr-payload">{point.name}</p>}
                 <p className="qr-payload">{payload}</p>
                 <button className="btn btn-ghost btn-sm" onClick={copy}>
                   <Copy size={14} strokeWidth={1.75} />
@@ -86,7 +92,7 @@ export function QrPage() {
                 </button>
               </div>
               <p className="qr-help">
-                Zeskanuj ten kod skanerem w aplikacji albo aparatem telefonu. Link otworzy skaner i pokaże treść punktu.
+                Zeskanuj ten kod skanerem w aplikacji albo aparatem telefonu. Link otworzy skaner i pokaże dane słupa.
               </p>
             </div>
           )}

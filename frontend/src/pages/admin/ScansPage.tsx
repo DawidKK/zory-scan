@@ -32,7 +32,8 @@ export function ScansPage() {
         {scans.map((s) => (
           <button key={s.id} className="row" onClick={() => navigate(`/admin?point=${s.pointId}`)}>
             <span className={`dot ${isFresh(s.scannedAt) ? 'dot-teal' : 'dot-muted'}`} />
-            <span className="row-title">{s.pointName}</span>
+            <span className="row-title tabular">{s.pointLabel ?? (s.pointName || 'Słup bez numeru')}</span>
+            {s.pointLabel && s.pointName && <span className="row-meta">{s.pointName}</span>}
             <span className="row-meta">{deviceLabel(s.userAgent)}</span>
             {s.lat != null && s.lng != null && (
               <span className="row-meta row-hide-sm tabular">

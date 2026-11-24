@@ -7,6 +7,7 @@ import { clearToken } from '../../lib/auth';
 import { parsePointId } from '../../lib/qr';
 import type { ScanResult } from '../../lib/types';
 import { LogoMark } from '../../components/Logo';
+import { toRoman } from '../../lib/network';
 
 type State =
   | { kind: 'scanning' }
@@ -139,14 +140,48 @@ export function ScannerPage() {
               <span className="dot dot-teal" />
               Zeskanowano
             </span>
-            <h1 className="sheet-title">{state.result.name}</h1>
+            {state.result.status === 'planned' && <span className="badge badge-orange">Projektowany</span>}
+            <h1 className="sheet-title tabular">{state.result.label ?? (state.result.name || 'Słup')}</h1>
+            {state.result.label && state.result.name && <p className="sheet-subtitle">{state.result.name}</p>}
+            {state.result.label && (
+              <dl className="sheet-facts">
+                <div>
+                  <dt>Szafa</dt>
+                  <dd className="tabular">SOU-{state.result.cabinetNumber}</dd>
+                </div>
+                <div>
+                  <dt>Obwód</dt>
+                  <dd className="tabular">{toRoman(state.result.circuitNumber ?? 0)}</dd>
+                </div>
+                <div>
+                  <dt>Słup</dt>
+                  <dd className="tabular">{state.result.number ?? '—'}</dd>
+                </div>
+                {state.result.inventoryId && (
+                  <div>
+                    <dt>Nr inw.</dt>
+                    <dd className="tabular">{state.result.inventoryId}</dd>
+                  </div>
+                )}
+              </dl>
+            )}
+            {state.result.fixtures.length > 0 && (
+              <ul className="sheet-fixtures">
+                {state.result.fixtures.map((f, i) => (
+                  <li key={i} className="tabular">
+                    <span>Oprawa {f.suffix ?? (state.result.fixtures.length > 1 ? i + 1 : '')}</span>
+                    <span>{[f.phase, f.powerW != null ? `${f.powerW} W` : null, f.model].filter(Boolean).join(' · ') || '—'}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
             {state.result.address && (
               <p className="sheet-address">
                 <MapPin size={14} strokeWidth={1.75} />
                 {state.result.address}
               </p>
             )}
-            <div className="sheet-content">{state.result.content || 'Brak treści dla tego punktu.'}</div>
+            <div className="sheet-content">{state.result.content || 'Brak dodatkowych informacji dla tego słupa.'}</div>
           </>
         )}
 

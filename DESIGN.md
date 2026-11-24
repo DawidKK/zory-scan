@@ -41,6 +41,15 @@ Tła subtelne (badge, zaznaczenia) — kolor brandu z niską przezroczystością
 --brand-teal-soft:   rgb(133 200 204 / 0.18);
 ```
 
+### Kolory sieci oświetleniowej
+
+| Token / wartość | Zastosowanie |
+|---|---|
+| `--sou-blue` `#2F6FDB` (`--sou-blue-strong` `#1F4FA8` zaznaczony) | **wyłącznie** szafy oświetlenia ulicznego (SOU): znacznik, etykieta, swatch |
+| `--sou-blue-text` / `--sou-blue-soft` | tekst / tło w kolorze SOU |
+| `--brand-red` | słupy i oprawy (pinezka) |
+| Paleta obwodów `#E08A1E #2A9AA3 #3E9650 #8C7F22 #9A5B34 #5E6672 #4E8F7C #B7791F` | linie kablowe; kolor wynika z numeru obwodu (`lib/network.ts`). Celowo bez czerwieni i niebieskiego, żeby linie nie zlewały się z markerami |
+
 ### Neutralne — Light (domyślny)
 
 | Token | HEX | Zastosowanie |
@@ -175,6 +184,11 @@ Overlay modala: `rgb(0 0 0 / 0.4)` (light), `rgb(0 0 0 / 0.6)` (dark). Bez blura
 - Tooltip markera: nazwa punktu + adres (11px, `--text-tertiary`). Kliknięcie otwiera panel edycji.
 - Panel punktu: blok „Adres” (Nominatim) i „Najbliższy punkt” (nazwa · odległość, klikalne), ikony w `--brand-teal-text`.
 - **Filtry mapy:** pływające pudełko w prawym górnym rogu (`--bg-elevated`, border, radius 6px) z checkboxami. Checkbox 14px, zaznaczony = `--brand-teal-text` z białym ptaszkiem.
+- **Szafa SOU:** niebieski zaokrąglony kwadrat 26×26px (`--sou-blue`, biały obrys 2px, biała błyskawica), stała etykieta `SOU-84` na niebieskim tle. Inny kształt niż pinezka słupa, żeby rozróżnienie nie opierało się tylko na kolorze.
+- **Słup projektowany:** biała pinezka z przerywanym czerwonym obrysem; linia kabla do niego przerywana. Kilka opraw na słupie: czarny licznik w rogu pinezki.
+- **Linie kablowe:** odcinek od słupa poprzedzającego (lub szafy) do słupa, 3px w kolorze obwodu. Po zaznaczeniu słupa droga zasilania i słupy zasilane dalej są pogrubione (5px), reszta przygaszona (30%).
+- **Numery słupów:** stałe etykiety (12px, 600) od przybliżenia 17, z fazami opraw w `--text-tertiary`.
+- **Tryb rysowania obwodu:** pasek u góry mapy z kolorem obwodu i podglądem kolejnego numeru, kursor krzyżyk, przerywany podgląd odcinka do kursora.
 - **Heatmapa skanów:** gradient brandu turkus → pomarańcz → czerwień → `#9E2A22`. Waga punktu = liczba skanów względem najczęściej skanowanego.
 
 ---
